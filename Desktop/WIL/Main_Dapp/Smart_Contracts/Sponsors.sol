@@ -48,7 +48,7 @@ contract Sponsors
     }
     
     function triggertokens() public payable {
-       rewardsContract.trigger() ;
+       rewardsContract.trigger();
     }
     
     function withdraw() public payable {
