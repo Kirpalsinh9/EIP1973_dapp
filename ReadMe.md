@@ -1,4 +1,5 @@
 Event Sponsoring Through D-App:
+
  >Use-Case:
  This is just a Dapp to get sponsors for ABC Event Company. After every event, Sponsors will be given equal erc20 tokens that can be redeemed to get special services and discounts from ABC event company. 
 
