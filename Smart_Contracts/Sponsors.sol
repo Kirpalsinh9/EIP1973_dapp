@@ -20,8 +20,7 @@ contract Sponsors
     Rewards public rewardsContract;
     address public sponsorshipaddress = address(this);
     
-   //takes address of reward contract and checks whether the address of this contract is minter or not 
-   //if not then adds it in  minter{added this as I was getting issues in minting tokens}   
+    
     constructor(address _rewardsContract) public payable {
         rewardsContract=Rewards(_rewardsContract);
         totalsponsors=0;
@@ -41,7 +40,7 @@ contract Sponsors
         require(tx.origin==owner, "Caller is not authorized");
         _; 
     }
-    //add minters as sponsors[participants] 
+    //add sponsor
     function addSponsor(address _sponsor) public {
         require(!sponsorsDB[tx.origin].issponsor, "It's already added");
         require(totalsponsors<=1,"New Sponsors can't be added");             
@@ -119,7 +118,7 @@ contract Factory{
     uint256 goal;
     
    
-    
+    //deploy sponsor2 using the address of sponsors contract and adding initial goal for an event
     function deploy(address _sponsors,uint256 _goal) public {
         Id++;
         goal=_goal;
@@ -130,6 +129,7 @@ contract Factory{
        
     }
     
+    //to get the id for an event
     function getfactoryById(uint _id) public view returns (Sponsor2) {
       return SponsorList[_id];
     }
@@ -140,11 +140,12 @@ contract Dashboard{
      uint public SponsorshipId;
     Factory public database;
    
-      
+     //takes the adrress of Factory 
       constructor(address _database) public {
         database = Factory(_database);
     }
     
+    //to deploy sponsor2 contract through Factory using the address of Sponsors[main]contract    
     function newFactory(address _mainsp,uint256 _goal) public  {
         
         SponsorshipId++;
@@ -157,23 +158,31 @@ contract Dashboard{
         return SponsorshipId;
     }
     
+    //to add sponsor
     function addSponsorbyId(uint _id,address sponsor) public  {
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.addMintersfrom2(sponsor);
     }
+    
+    //to remove sponsor
     function removeSponsorbyId(uint _id,address sponsor) public  {
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.removeMintersfrom2(sponsor);
     }
+    
+    //to get sponsorship for an event by its id 
     function sponsoringbyID(uint _id) public payable {
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.sponsoringfrom2.value(msg.value)();
     }
     
+    //to mint tokens after an event
     function minttokensbyID(uint _id) public payable{
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.triggerfrom2();
     }
+    
+    //to withdraw tokens 
     function withdrawfromdashboard(uint _id) public payable{
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.withdrawfrom2();
