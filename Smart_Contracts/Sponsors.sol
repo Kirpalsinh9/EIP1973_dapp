@@ -127,7 +127,7 @@ contract Factory{
 }
 
 contract Dashboard{
-     uint public CrowdId;
+     uint public SponsorshipId;
     Factory public database;
    
       
@@ -137,21 +137,24 @@ contract Dashboard{
     
     function newFactory(address _mainsp,uint256 _goal) public  {
         
-        CrowdId++;
+        SponsorshipId++;
         
         database.deploy(_mainsp,_goal);
     }
     
     function getid()public view returns(uint)
     {
-        return CrowdId;
+        return SponsorshipId;
     }
     
     function addSponsorbyId(uint _id,address sponsor) public  {
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.addMintersfrom2(sponsor);
     }
-    
+    function removeSponsorbyId(uint _id,address sponsor) public  {
+        Sponsor2  f=Sponsor2(database.getfactoryById(_id));
+        f.removeMintersfrom2(sponsor);
+    }
     function sponsoringbyID(uint _id) public payable {
         Sponsor2  f=Sponsor2(database.getfactoryById(_id));
         f.sponsoringfrom2.value(msg.value)();

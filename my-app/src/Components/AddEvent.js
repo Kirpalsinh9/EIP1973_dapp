@@ -10,9 +10,7 @@ class AddEvent extends React.Component {
         super()
         this.state = {
 
-
-            Goal: "",
-            // Id:"",
+            Goal: ""
 
             // loading1: false,
             // loading2:false,
@@ -20,7 +18,7 @@ class AddEvent extends React.Component {
         }
         this.handlechange = this.handlechange.bind(this)
         this.handlesubmit = this.handlesubmit.bind(this)
-        this.handlesubmit1 = this.handlesubmit1.bind(this)
+        //this.handlesubmit1 = this.handlesubmit1.bind(this)
     }
     handlechange = (e) => {
         this.setState({
@@ -57,7 +55,6 @@ class AddEvent extends React.Component {
         //   });
 
         this.setState({
-            Name: "",
             Goal: ""
         })
 
@@ -65,28 +62,7 @@ class AddEvent extends React.Component {
 
 
     }
-    handlesubmit1 = async (e) => {
-        e.preventDefault()
-        let ethereum = window.ethereum;
-        let addr = await ethereum.enable()
-        // const db = firebase.firestore();
-        // const userRef1 = await db.collection("users").where('Name' , '==' ,this.state.Name1).get()
-        // console.log("the user",userRef1)
-        // let Tokenid
-        // userRef1.docs.forEach(async (Ele) => {
-        //     console.log("the id is", Ele.data().Id)
-        //     // console.log("the owner address is", Ele.data().owner)
 
-        //     Tokenid=Ele.data().Id
-        // })
-        // console.log("The token id is",Tokenid)
-        // this.setState({
-        //     Id:Tokenid,
-        //     Name1:"",
-
-        // })
-
-    }
     render() {
         return (
             <div>
