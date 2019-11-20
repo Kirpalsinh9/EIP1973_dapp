@@ -1,4 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Rewards Contract: 0xcd27c55939210158666dc9df286ceba56c8c4747 [Koovan]
+Sponsors Contract: 0x5b185fab47aef587f06975b2f38335eee43c2b7b
+Factory Contract: 0xd3b86c3ba386679edaefc77433dbac7308293d29
+Dashboard: 0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193
+
 
 ## Available Scripts
 
