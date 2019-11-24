@@ -1,6 +1,8 @@
 import React from "react"
-//import firebase from './Firestore'
-//import { ethers } from 'ethers';
+import { ethers } from 'ethers';
+import firebase from '../Firestore'
+const abi = require('../abi');
+
 //import Loader from 'react-loader-spinner'
 
 class AddSponsor extends React.Component {
@@ -23,9 +25,19 @@ class AddSponsor extends React.Component {
     }
     handlesubmit = async (e) => {
         e.preventDefault();
-
-        console.log(this.state.Address)
-        console.log(this.state.Id)
+        let eth = window.ethereum;
+        let add = await eth.enable()
+        let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+        const signer = provider.getSigner();
+        console.log(add.toString());
+        let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
+        let contract = new ethers.Contract(address, abi, signer);
+        await contract.addSponsorbyId(this.state.Id, this.state.Address);
+        const db = firebase.firestore();
+        db.collection("Sponsors").add({
+            EventId: this.state.Id,
+            Address: this.state.Address
+        })
         this.setState({
             Address: "",
             Id: ""
@@ -33,9 +45,15 @@ class AddSponsor extends React.Component {
     }
     handlesubmit1 = async (e) => {
         e.preventDefault();
+        let eth = window.ethereum;
+        let add = await eth.enable()
+        let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+        const signer = provider.getSigner();
+        console.log(add.toString());
+        let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
+        let contract = new ethers.Contract(address, abi, signer);
+        await contract.removeSponsorbyId(this.state.Id1, this.state.Address1);
 
-        console.log(this.state.Address1)
-        console.log(this.state.Id1)
         this.setState({
             Address1: "",
             Id1: ""

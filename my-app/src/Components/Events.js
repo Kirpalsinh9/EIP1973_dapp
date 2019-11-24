@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import firebase from '../Firestore'
 
 export default class Events extends Component {
     constructor() {
@@ -24,6 +25,7 @@ export default class Events extends Component {
         e.preventDefault();
         console.log(this.state.Id)
         console.log(this.state.Amount)
+
         this.setState({
             Amount: "",
             Id: ""

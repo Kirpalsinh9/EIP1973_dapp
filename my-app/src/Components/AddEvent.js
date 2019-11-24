@@ -1,14 +1,16 @@
 import React from "react"
 //import firebase from './Firestore'
-//import { ethers } from 'ethers';
-//import Loader from 'react-loader-spinner'
+import { ethers } from 'ethers';
 
+//import Loader from 'react-loader-spinner'
+const abi = require('../abi')
 class AddEvent extends React.Component {
     constructor() {
         super()
         this.state = {
 
-            Goal: ""
+            Goal: "",
+            Id: ""
 
             // loading1: false,
             // loading2:false,
@@ -16,7 +18,7 @@ class AddEvent extends React.Component {
         }
         this.handlechange = this.handlechange.bind(this)
         this.handlesubmit = this.handlesubmit.bind(this)
-        //this.handlesubmit1 = this.handlesubmit1.bind(this)
+        this.handlesubmit1 = this.handlesubmit1.bind(this)
     }
     handlechange = (e) => {
         this.setState({
@@ -25,44 +27,39 @@ class AddEvent extends React.Component {
     }
     handlesubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state.Goal)
+        let eth = window.ethereum;
+        let add = await eth.enable()
+        let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+        const signer = provider.getSigner();
+        console.log(add.toString());
+        let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
+        let contract = new ethers.Contract(address, abi, signer);
+        const addressofSponsors = '0x5b185fab47aef587f06975b2f38335eee43c2b7b'
+        await contract.newFactory(addressofSponsors, this.state.Goal);
+        // const db = firebase.firestore();
+        // db.collection("Events").add({  
+        //     Goal: this.state.Goal
+        // }) 
         this.setState({
             Goal: ""
         })
-        // e.preventDefault();
-        // let ethereum = window.ethereum;
-        // let addr = await ethereum.enable()
-        // let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
-        // const signer = provider.getSigner();
-        // let abi = []
 
-        // let address = "0xc5352569c97a485fc359444fcd6ab6c9ed25d797"
+    }
+    handlesubmit1 = async (e) => {
+        e.preventDefault();
+        let eth = window.ethereum;
+        let add = await eth.enable()
+        let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
+        const signer = provider.getSigner();
+        console.log(add.toString());
+        let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
+        let contract = new ethers.Contract(address, abi, signer);
+        //const addressofSponsors = '0x5b185fab47aef587f06975b2f38335eee43c2b7b'
+        let newid = await contract.getid();
 
-        // let contract = new ethers.Contract(address, abi, signer);
-        // let rewards = "0x8566f909e9af442dcfb075bfc48e489dd2f43019"
-
-        // let tx1 = await contract.newFactory(this.state.Goal, rewards)
-
-        // let Id = await contract.getid()
-        // console.log("The id is", parseInt(Id._hex))
-        // Id = parseInt(Id._hex)
-
-        // //const db = firebase.firestore();
-
-        // // const userRef = db.collection("users").add({
-        // //     Id: Id,
-        // //     Name:this.state.Name,
-
-
-
-        // //   });
-
-        // this.setState({
-        //     Goal: ""
-        // })
-
-
-
+        this.setState({
+            Id: newid.toString()
+        })
 
     }
 
@@ -76,15 +73,8 @@ class AddEvent extends React.Component {
 
 
                 </form>
-                {/* <form onSubmit={this.handlesubmit1}>
-                 <h4>Check your ID</h4>
-                 <input type="text" name="Name1" onChange={this.handlechange} value={this.state.Name1} placeholder="YOUR CONTRACT NAME"/>
-                 <button type="submit" >Submit</button>
-                 <br/> */}
-                {/*                 
-                {this.state.Id !== "" ? <h3 style={{textAlign: 'center'}}>The Id is {this.state.Id}</h3> : ""}
-
-                </form> */}
+                <button onClick={this.handlesubmit1}> Get Your New  Event Id!!</button>
+                {this.state.Id !== "" ? <p>New Event Id:{this.state.Id}</p> : ""}
             </div>
         )
     }
