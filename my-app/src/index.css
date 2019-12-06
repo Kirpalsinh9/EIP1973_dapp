@@ -11,3 +11,87 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.main{
+  font-family: "Times New Roman", Times, serif; 
+  padding: 20px;
+  background-color:white;opacity:0.7;
+}
+input[type=text], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.input[type=text], select {
+  width: 7%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+h1 {
+  color: black;
+  text-shadow: 2px 2px 4px #000000;
+}
+h2 {
+  color: black;
+  text-shadow: 2px 2px 4px #000000;
+}
+h2 {
+  color:goldenrod;
+  text-shadow: 2px 2px 4px #000000;
+}
+h3 {
+  color: black;
+  text-shadow: 2px 2px 4px #000000;
+}
+h5 {
+  color: blue;
+  text-shadow: 2px 2px 4px #000000;
+}
+button{
+  background-color:black;
+  color: #f2f2f2; 
+}
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.wrapper {
+  width:100%;
+  padding: 1em;
+  border-bottom: 10px groove #555;
+}
+.wrapper__form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 468px;
+  font-weight: bolder;
+}

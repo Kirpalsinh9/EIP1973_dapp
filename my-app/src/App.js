@@ -8,16 +8,17 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h4>Deploy New Event</h4>
+    <div className="main">
+      <h1>Sponsoring Through D-App</h1>
+      <h2>Deploy New Event</h2>
       <AddEvent />
-      <h4>Manage Sponsors</h4>
+      <h2>Manage Sponsors</h2>
       <AddSponsor />
-      <h4>Sponsoring</h4>
+      <h2>Sponsoring</h2>
       <Event />
-      <h4>Mint Token</h4>
+      <h2>Mint Token</h2>
       <Mintingtokens />
-      <h4>Withdraw Tokens</h4>
+      <h2>Withdraw Tokens</h2>
       <Withdrawtokens />
 
     </div>
