@@ -1,19 +1,18 @@
 import React from "react"
 //import firebase from './Firestore'
 import { ethers } from 'ethers';
-
-//import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner'
 const abi = require('../abi')
+
 class AddEvent extends React.Component {
     constructor() {
         super()
         this.state = {
 
             Goal: "",
-            Id: ""
+            Id: "",
+            loading: false
 
-            // loading1: false,
-            // loading2:false,
 
         }
         this.handlechange = this.handlechange.bind(this)
@@ -27,6 +26,9 @@ class AddEvent extends React.Component {
     }
     handlesubmit = async (e) => {
         e.preventDefault();
+        this.setState({
+            loading: true
+        })
         let eth = window.ethereum;
         let add = await eth.enable()
         let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
@@ -41,7 +43,8 @@ class AddEvent extends React.Component {
         //     Goal: this.state.Goal
         // }) 
         this.setState({
-            Goal: ""
+            Goal: "",
+            loading: false
         })
 
     }
@@ -64,12 +67,20 @@ class AddEvent extends React.Component {
     }
 
     render() {
+        const loading = this.state.loading
         return (
             <div>
                 <form onSubmit={this.handlesubmit}>
 
                     <input type="text" name="Goal" label="Goal" onChange={this.handlechange} value={this.state.Goal} placeholder="Enter Amount (ex. ETH)" />
-                    <button type="submit" >Submit</button>
+                    <button type="submit" disabled={loading}>
+                        {this.state.loading === true ? <Loader
+                            type="Puff"
+                            color="white"
+                            height="30"
+                            width="30"
+                        /> : ""}
+                        Submit</button>
 
 
                 </form>

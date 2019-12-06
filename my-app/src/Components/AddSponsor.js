@@ -1,6 +1,7 @@
 import React from "react"
 import { ethers } from 'ethers';
 import firebase from '../Firestore'
+import Loader from 'react-loader-spinner';
 const abi = require('../abi');
 
 //import Loader from 'react-loader-spinner'
@@ -12,7 +13,9 @@ class AddSponsor extends React.Component {
             Id: "",
             Address: "",
             Address1: "",
-            Id1: ""
+            Id1: "",
+            loading1: false,
+            loading2: false
         }
         this.handlechange = this.handlechange.bind(this)
         this.handlesubmit = this.handlesubmit.bind(this)
@@ -25,6 +28,9 @@ class AddSponsor extends React.Component {
     }
     handlesubmit = async (e) => {
         e.preventDefault();
+        this.setState({
+            loading1: true
+        })
         let eth = window.ethereum;
         let add = await eth.enable()
         let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
@@ -40,11 +46,15 @@ class AddSponsor extends React.Component {
         })
         this.setState({
             Address: "",
-            Id: ""
+            Id: "",
+            loading1: false
         })
     }
     handlesubmit1 = async (e) => {
         e.preventDefault();
+        this.setState({
+            loading2: true
+        })
         let eth = window.ethereum;
         let add = await eth.enable()
         let provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
@@ -56,10 +66,13 @@ class AddSponsor extends React.Component {
 
         this.setState({
             Address1: "",
-            Id1: ""
+            Id1: "",
+            loading2: false
         })
     }
     render() {
+        const loading1 = this.state.loading1
+        const loading2 = this.state.loading2
         return (
             <div>
                 <h5>Add Sponsor</h5>
@@ -68,7 +81,13 @@ class AddSponsor extends React.Component {
                     <br />
                     <input type="text" name="Address" label="Address" onChange={this.handlechange} value={this.state.Address} placeholder="Enter Address to add" />
 
-                    <button type="submit" >Submit</button>
+                    <button type="submit" disabled={loading1}>
+                        {this.state.loading1 === true ? <Loader
+                            type="Puff"
+                            color="white"
+                            height="30"
+                            width="30"
+                        /> : ""}Submit</button>
 
 
                 </form>
@@ -80,7 +99,13 @@ class AddSponsor extends React.Component {
                     <br />
                     <input type="text" name="Address1" label="Address" onChange={this.handlechange} value={this.state.Address1} placeholder="Enter Address to remove" />
 
-                    <button type="submit" >Submit</button>
+                    <button type="submit" disabled={loading2} >
+                        {this.state.loading2 === true ? <Loader
+                            type="Puff"
+                            color="white"
+                            height="30"
+                            width="30"
+                        /> : ""}Submit</button>
 
 
                 </form>
