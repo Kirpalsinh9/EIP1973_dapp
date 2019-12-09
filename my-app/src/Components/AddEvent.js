@@ -73,12 +73,13 @@ class AddEvent extends React.Component {
                 <form onSubmit={this.handlesubmit}>
 
                     <input type="text" name="Goal" label="Goal" onChange={this.handlechange} value={this.state.Goal} placeholder="Enter Amount (ex. ETH)" />
+                    {/* <button type="submit"> Submit </button> */}
                     <button type="submit" disabled={loading}>
                         {this.state.loading === true ? <Loader
                             type="Puff"
                             color="white"
-                            height="30"
-                            width="30"
+                            height='30'
+                            width='30'
                         /> : ""}
                         Submit</button>
 

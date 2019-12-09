@@ -10,10 +10,9 @@ export default class Events extends Component {
         this.state = {
             Id: "",
             Amount: "",
-
-            loading: false
-
-
+            loading: false,
+            Error: "",
+            Message: ""
         }
         this.handlechange = this.handlechange.bind(this)
         this.handlesubmit = this.handlesubmit.bind(this)
@@ -39,13 +38,23 @@ export default class Events extends Component {
         console.log(add.toString());
         let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
         let contract = new ethers.Contract(address, abi, signer);
-        await contract.sponsoringbyID(this.state.Id, { value: ethers.utils.parseEther(this.state.Amount) });
+        try {
+            await contract.sponsoringbyID(this.state.Id, { value: ethers.utils.parseEther(this.state.Amount) });
 
-        this.setState({
-            Amount: "",
-            Id: "",
-            loading: false
-        })
+            this.setState({
+                Amount: "",
+                Id: "",
+                Error: "",
+                Message: "We've got your sponsorship.Thanks!!",
+                loading: false
+            })
+        } catch (error) {
+            console.log(error.message);
+            this.setState({
+                Error: "You are not authorized or we've got enough sponsorship for this event.",
+                Message: ""
+            })
+        }
     }
 
     render() {
@@ -64,6 +73,9 @@ export default class Events extends Component {
                             width="30"
                         /> : ""}Submit</button>
                 </form>
+                {this.state.Message !== "" ? <p>{this.state.Message}</p> : ""}
+                {this.state.Error !== "" ? <p>{this.state.Error}</p> : ""}
+
             </div>
         )
     }

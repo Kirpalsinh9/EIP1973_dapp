@@ -15,7 +15,10 @@ class AddSponsor extends React.Component {
             Address1: "",
             Id1: "",
             loading1: false,
-            loading2: false
+            loading2: false,
+            Error1: "",
+            Error2: "",
+            Message: ""
         }
         this.handlechange = this.handlechange.bind(this)
         this.handlesubmit = this.handlesubmit.bind(this)
@@ -38,17 +41,28 @@ class AddSponsor extends React.Component {
         console.log(add.toString());
         let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
         let contract = new ethers.Contract(address, abi, signer);
-        await contract.addSponsorbyId(this.state.Id, this.state.Address);
-        const db = firebase.firestore();
-        db.collection("Sponsors").add({
-            EventId: this.state.Id,
-            Address: this.state.Address
-        })
-        this.setState({
-            Address: "",
-            Id: "",
-            loading1: false
-        })
+        try {
+            await contract.addSponsorbyId(this.state.Id, this.state.Address);
+            const db = firebase.firestore();
+            db.collection("Sponsors").add({
+                EventId: this.state.Id,
+                Address: this.state.Address
+            })
+            this.setState({
+                Address: "",
+                Id: "",
+                loading1: false,
+                Error1: "",
+                Error2: "",
+                Message: "Request has been Accepted."
+            })
+        } catch (error) {
+            console.log(error.message);
+            this.setState({
+                Error1: "It's already added or limit for sponsors is reached.",
+                Message: ""
+            })
+        }
     }
     handlesubmit1 = async (e) => {
         e.preventDefault();
@@ -62,13 +76,24 @@ class AddSponsor extends React.Component {
         console.log(add.toString());
         let address = '0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193'
         let contract = new ethers.Contract(address, abi, signer);
-        await contract.removeSponsorbyId(this.state.Id1, this.state.Address1);
+        try {
+            await contract.removeSponsorbyId(this.state.Id1, this.state.Address1);
 
-        this.setState({
-            Address1: "",
-            Id1: "",
-            loading2: false
-        })
+            this.setState({
+                Address1: "",
+                Id1: "",
+                loading2: false,
+                Error1: "",
+                Error2: "",
+                Message: "Request has been Accepted."
+            })
+        } catch (error) {
+            console.log(error.message);
+            this.setState({
+                Error2: "It's already Removed.",
+                Message: ""
+            })
+        }
     }
     render() {
         const loading1 = this.state.loading1
@@ -109,6 +134,9 @@ class AddSponsor extends React.Component {
 
 
                 </form>
+                {this.state.Message !== "" ? <p>{this.state.Message}</p> : ""}
+                {this.state.Error1 !== "" ? <p>{this.state.Error1}</p> : ""}
+                {this.state.Error2 !== "" ? <p>{this.state.Error2}</p> : ""}
             </div>
         )
     }
