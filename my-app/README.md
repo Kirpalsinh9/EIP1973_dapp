@@ -4,6 +4,8 @@ Sponsors Contract: 0x5b185fab47aef587f06975b2f38335eee43c2b7b
 Factory Contract: 0xd3b86c3ba386679edaefc77433dbac7308293d29
 Dashboard: 0x7aca5a76324dbe1dfb0276b6960b5f79f21cc193
 
+Hosted URL:https://erc1973-c9261.firebaseapp.com
+
 
 ## Available Scripts
 
